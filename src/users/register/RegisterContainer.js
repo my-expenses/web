@@ -2,15 +2,21 @@ import {useState} from "react";
 import Register from "./Register";
 import validator from 'validator';
 import {usePasswordValidation} from "./usePasswordValidation";
+import {useButtonValidation} from "./useButtonValidation";
+import {useNameValidation} from "./useNameValidation";
 
 const RegisterContainer = () => {
-  const [fullName, setFullName] = useState('')
+
+  const [firstName, setFirstName] = useState('')
+  const [firstNameError, firstNameErrorText] = useNameValidation(firstName)
+  const [lastName, setLastName] = useState('')
+  const [lastNameError, lastNameErrorText] = useNameValidation(lastName)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
-  const [fullNameError, setFullNameError] = useState('')
-  const [emailError, setEmailError] = useState('')
+  const [emailError, setEmailError] = useState('Please enter a valid email')
 
   const [validLength, hasNumber, upperCase, lowerCase, match, specialChar,] =
     usePasswordValidation({
@@ -18,17 +24,9 @@ const RegisterContainer = () => {
     secondPassword: confirmPassword,
   });
 
-
-  const onFullNameChange = (val) => {
-
-    if (validator.isEmpty(val))
-      setFullNameError('Please enter your name')
-    else if (!validator.isAlpha(val))
-      setFullNameError('Your name cannot contain numbers')
-    else
-      setFullNameError('')
-    setFullName(val)
-  }
+  const validForm = useButtonValidation({
+    firstNameError, lastNameError, emailError, validLength, hasNumber, upperCase, lowerCase, match, specialChar
+  })
 
   const onEmailChange = (val) => {
     if (validator.isEmail(val))
@@ -41,10 +39,15 @@ const RegisterContainer = () => {
   return (
     <div>
       <Register
-        fullName={fullName}
-        fullNameTextError={fullNameError}
-        fullNameError={fullNameError.length > 0}
-        onFullNameChange={(value) => onFullNameChange(value)}
+        firstName={firstName}
+        firstNameError={firstNameError}
+        firstNameTextError={firstNameErrorText}
+        onFirstNameChange={(value) => setFirstName(value)}
+
+        lastName={lastName}
+        lastNameError={lastNameError}
+        lastNameTextError={lastNameErrorText}
+        onLastNameChange={(value) => setLastName(value)}
 
         email={email}
         emailError={emailError.length > 0}
@@ -63,6 +66,8 @@ const RegisterContainer = () => {
         lowercase={lowerCase}
         specialChar={specialChar}
         match={match}
+
+        enableButton={validForm}
       />
     </div>
   );

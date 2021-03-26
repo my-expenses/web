@@ -30,19 +30,40 @@ const Register = (props) => {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <TextField
-                name="fullName"
+                name="firstName"
                 variant="outlined"
                 required
                 fullWidth
-                id="fullName"
-                label="Full Name"
-                value={props.fullName}
-                error={props.fullNameError}
-                helperText={props.fullNameTextError}
+                id="firstName"
+                label="First Name"
+                value={props.firstName}
+                error={props.firstNameError}
+                helperText={props.firstNameTextError}
                 autoFocus
-                onChange={(e) => props.onFullNameChange(e.target.value)}
+                onChange={(e) => props.onFirstNameChange(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Person/>
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                name="lastName"
+                variant="outlined"
+                required
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                value={props.lastName}
+                error={props.lastNameError}
+                helperText={props.lastNameTextError}
+                onChange={(e) => props.onLastNameChange(e.target.value)}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -126,7 +147,7 @@ const Register = (props) => {
                                         control={<Checkbox icon={<Error/>} className={classes.checkbox}
                                                            checked={props.validLength}
                                                            name="length"/>}
-                                        label="8 characters"
+                                        label="8+ characters"
                       />
                       <FormControlLabel className={classes.formControlLabel}
                                         control={<Checkbox icon={<Error/>} className={classes.checkbox}
@@ -175,6 +196,7 @@ const Register = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={!props.enableButton}
           >
             Sign Up
           </Button>
@@ -192,9 +214,12 @@ const Register = (props) => {
 }
 
 Register.propTypes = {
-  fullName: PropTypes.string,
-  fullNameError: PropTypes.bool,
-  fullNameTextError: PropTypes.string,
+  firstName: PropTypes.string,
+  firstNameError: PropTypes.bool,
+  firstNameTextError: PropTypes.string,
+  lastName: PropTypes.string,
+  lastNameError: PropTypes.bool,
+  lastNameTextError: PropTypes.string,
   email: PropTypes.string,
   emailError: PropTypes.bool,
   emailTextError: PropTypes.string,
@@ -211,6 +236,8 @@ Register.propTypes = {
   lowercase: PropTypes.bool,
   specialChar: PropTypes.bool,
   match: PropTypes.bool,
+
+  enableButton: PropTypes.bool
 }
 
 export default Register;
