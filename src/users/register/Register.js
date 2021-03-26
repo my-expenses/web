@@ -10,17 +10,20 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import styles from "../styling";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import {Person, Email, Lock} from "@material-ui/icons";
+import {Person, Email, Lock, Error} from "@material-ui/icons";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import {FormControl, FormGroup, FormLabel} from "@material-ui/core";
 
 
 const Register = (props) => {
   const classes = styles()
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
+      <CssBaseline/>
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <LockOutlinedIcon/>
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
@@ -43,7 +46,7 @@ const Register = (props) => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Person />
+                      <Person/>
                     </InputAdornment>
                   )
                 }}
@@ -65,59 +68,106 @@ const Register = (props) => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Email />
+                      <Email/>
                     </InputAdornment>
                   )
                 }}
               />
             </Grid>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  value={props.password}
-                  error={props.passwordError}
-                  helperText={props.passwordTextError}
-                  onChange={(e) => props.onPasswordChange(e.target.value)}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Lock />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  id="confirmPassword"
-                  value={props.confirmPassword}
-                  error={props.confirmPasswordError}
-                  helperText={props.confirmPasswordTextError}
-                  onChange={(e) => props.onConfirmPasswordChange(e.target.value)}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Lock />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-              </Grid>
+
+            <Grid item xs={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                value={props.password}
+                onChange={(e) => props.onPasswordChange(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Lock/>
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                id="confirmPassword"
+                value={props.confirmPassword}
+                onChange={(e) => props.onConfirmPasswordChange(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Lock/>
+                    </InputAdornment>
+                  )
+                }}
+              />
             </Grid>
 
+            <Grid item>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Constraints</FormLabel>
+                <Grid container spacing={2}>
+                  <Grid container direction="column" item xs={6}>
+                    <FormGroup>
+                      <FormControlLabel className={classes.formControlLabel}
+                                        control={<Checkbox icon={<Error/>} className={classes.checkbox}
+                                                           checked={props.validLength}
+                                                           name="length"/>}
+                                        label="8 characters"
+                      />
+                      <FormControlLabel className={classes.formControlLabel}
+                                        control={<Checkbox icon={<Error/>} className={classes.checkbox}
+                                                           checked={props.hasNumber}
+                                                           name="number"/>}
+                                        label="Number"
+                      />
+                      <FormControlLabel className={classes.formControlLabel}
+                                        control={<Checkbox icon={<Error/>} className={classes.checkbox}
+                                                           checked={props.uppercase}
+                                                           name="upper"/>}
+                                        label="Uppercase"
+                      />
+                    </FormGroup>
+                  </Grid>
+                  <Grid container direction="column" item xs={6}>
+                    <FormGroup>
+                      <FormControlLabel className={classes.formControlLabel}
+                                        control={<Checkbox icon={<Error/>} className={classes.checkbox}
+                                                           checked={props.lowercase}
+                                                           name="lower"/>}
+                                        label="Lowercase"
+                      />
+                      <FormControlLabel className={classes.formControlLabel}
+                                        control={<Checkbox icon={<Error/>} className={classes.checkbox}
+                                                           checked={props.specialChar}
+                                                           name="special"/>}
+                                        label="Special character"
+                      />
+                      <FormControlLabel className={classes.formControlLabel}
+                                        control={<Checkbox icon={<Error/>} className={classes.checkbox}
+                                                           checked={props.match}
+                                                           name="match"/>}
+                                        label="Confirmed"
+                                        color="primary"
+                      />
+                    </FormGroup>
+                  </Grid>
+                </Grid>
+              </FormControl>
+            </Grid>
           </Grid>
           <Button
             type="submit"
@@ -154,6 +204,13 @@ Register.propTypes = {
   confirmPassword: PropTypes.string,
   confirmPasswordError: PropTypes.bool,
   confirmPasswordTextError: PropTypes.string,
+
+  validLength: PropTypes.bool,
+  hasNumber: PropTypes.bool,
+  uppercase: PropTypes.bool,
+  lowercase: PropTypes.bool,
+  specialChar: PropTypes.bool,
+  match: PropTypes.bool,
 }
 
 export default Register;

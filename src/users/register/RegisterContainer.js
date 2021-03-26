@@ -1,6 +1,7 @@
 import {useState} from "react";
 import Register from "./Register";
 import validator from 'validator';
+import {usePasswordValidation} from "./usePasswordValidation";
 
 const RegisterContainer = () => {
   const [fullName, setFullName] = useState('')
@@ -10,8 +11,12 @@ const RegisterContainer = () => {
 
   const [fullNameError, setFullNameError] = useState('')
   const [emailError, setEmailError] = useState('')
-  const [passwordError, setPasswordError] = useState('')
-  const [confirmPasswordError, setConfirmPasswordError] = useState('')
+
+  const [validLength, hasNumber, upperCase, lowerCase, match, specialChar,] =
+    usePasswordValidation({
+    firstPassword: password,
+    secondPassword: confirmPassword,
+  });
 
 
   const onFullNameChange = (val) => {
@@ -33,24 +38,6 @@ const RegisterContainer = () => {
     setEmail(val)
   }
 
-  const onPasswordChange = (val) => {
-    setPassword(val)
-    if (val === confirmPassword)
-      setConfirmPasswordError('')
-    else
-      setConfirmPasswordError("Passwords doesn't match")
-  }
-
-  const onConfirmPasswordChange = (val) => {
-    setConfirmPassword(val)
-    if (password === val)
-      setConfirmPasswordError('')
-    else
-      setConfirmPasswordError("Passwords doesn't match")
-
-  }
-
-
   return (
     <div>
       <Register
@@ -65,14 +52,17 @@ const RegisterContainer = () => {
         onEmailChange={(value) => onEmailChange(value)}
 
         password={password}
-        passwordError={passwordError.length > 0}
-        passwordTextError={passwordError}
-        onPasswordChange={(value) => onPasswordChange(value)}
+        onPasswordChange={(value) => setPassword(value)}
 
         confirmPassword={confirmPassword}
-        confirmPasswordError={confirmPasswordError.length > 0}
-        confirmPasswordTextError={confirmPasswordError}
-        onConfirmPasswordChange={(value) => onConfirmPasswordChange(value)}
+        onConfirmPasswordChange={(value) => setConfirmPassword(value)}
+
+        validLength={validLength}
+        hasNumber={hasNumber}
+        uppercase={upperCase}
+        lowercase={lowerCase}
+        specialChar={specialChar}
+        match={match}
       />
     </div>
   );
