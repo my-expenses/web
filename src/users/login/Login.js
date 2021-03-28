@@ -3,7 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import {Link} from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import LockIcon from '@material-ui/icons/Lock';
@@ -84,8 +84,8 @@ const Login = (props) => {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
+              <Link to="/register" variant="body2">
+                Don't have an account? Sign Up
               </Link>
             </Grid>
           </Grid>

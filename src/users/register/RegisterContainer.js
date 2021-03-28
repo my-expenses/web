@@ -4,6 +4,8 @@ import validator from 'validator';
 import {usePasswordValidation} from "./usePasswordValidation";
 import {useButtonValidation} from "./useButtonValidation";
 import {useNameValidation} from "./useNameValidation";
+import api from "../../gateways/api";
+import qs from "qs";
 
 const RegisterContainer = () => {
 
@@ -34,6 +36,19 @@ const RegisterContainer = () => {
     else
       setEmailError('Please enter a valid email')
     setEmail(val)
+  }
+
+  const onSubmit = () => {
+    api.post("/users/register", qs.stringify({
+      fullName: firstName + " " + lastName,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    })).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
   return (
@@ -68,6 +83,7 @@ const RegisterContainer = () => {
         match={match}
 
         enableButton={validForm}
+        onSubmit={() => onSubmit()}
       />
     </div>
   );
