@@ -1,34 +1,27 @@
 import {useState} from "react";
 import Login from "./Login";
 import api from "../../gateways/api";
+import qs from "qs";
 
 const LoginContainer = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const submitForm = () => {
-    let formData = new FormData()
-    formData.append("username", username)
-    formData.append("password", password)
-    api({
-      method: "POST",
-      url: "/login",
-      data: formData
-    }).then(response => {
-      console.log(response)
-    }).catch(err => {
-      console.log(err)
-    })
+    api.post("/users/login", qs.stringify({
+      email: email,
+      password: password
+    })).then(res => console.log(res)).catch(err => console.log(err))
   }
 
   return (
     <div>
       <Login
-        username={username}
+        email={email}
         password={password}
-        onUsernameChange={(value) => setUsername(value)}
+        onEmailChange={(value) => setEmail(value)}
         onPasswordChange={(value) => setPassword(value)}
-        onSubmit={submitForm}
+        onSubmit={() => submitForm()}
       />
     </div>
   );

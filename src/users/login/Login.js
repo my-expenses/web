@@ -14,12 +14,6 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import styles from "../styling";
 
 const Login = (props) => {
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    props.onSubmit()
-  }
-
   const classes = styles();
 
   return (
@@ -32,19 +26,18 @@ const Login = (props) => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
-            autoFocus
-            value={props.username}
-            onChange={(e) => props.onUsernameChange(e.target.value)}
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
+            value={props.email}
+            onChange={(e) => props.onEmailChange(e.target.value)}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -74,11 +67,11 @@ const Login = (props) => {
             }}
           />
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={props.onSubmit}
           >
             Sign In
           </Button>
@@ -96,7 +89,7 @@ const Login = (props) => {
 }
 
 Login.propTypes = {
-  username: PropTypes.string,
+  email: PropTypes.string,
   password: PropTypes.string
 }
 
