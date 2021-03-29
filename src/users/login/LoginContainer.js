@@ -11,7 +11,12 @@ const LoginContainer = () => {
     api.post("/users/login", qs.stringify({
       email: email,
       password: password
-    })).then(res => console.log(res)).catch(err => console.log(err))
+    }))
+      .then(res => {
+        let token = res.data.token
+        localStorage.setItem("token", token)
+      })
+      .catch(err => console.log(err))
   }
 
   return (
