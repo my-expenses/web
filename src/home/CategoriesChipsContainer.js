@@ -5,9 +5,14 @@ import CategoriesChips from "./CategoriesChips";
 
 const CategoriesChipsContainer = () => {
   const [categoriesChips, setCategoriesChips] = useState([]);
+
   const [showTextField, setShowTextField] = useState(false);
-  const [newCategoryName, setNewCategoryName] = useState('');
-  const [newNameErrorText, setNewNameErrorText] = useState('');
+  const [typedCategoryName, setTypedCategoryName] = useState('');  // used for new or edited names
+  const [nameErrorText, setNameErrorText] = useState('');
+
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [categoryToEdit, setCategoryToEdit] = useState({});
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => {
     api.get("/auth/categories")
@@ -17,35 +22,67 @@ const CategoriesChipsContainer = () => {
   }, [])
 
   const createNewCategory = () => {
-    api.post('/auth/categories', qs.stringify({title: newCategoryName}))
+    api.post('/auth/categories', qs.stringify({title: typedCategoryName}))
       .then(res => {
         setCategoriesChips(prevState => [...prevState, res.data.category])
         setShowTextField(false)
-        setNewCategoryName("")
+        setTypedCategoryName("")
       })
       .catch(err => console.log(err))
   }
 
-  const deleteCategory = (categoryID) => {
+  const deleteCategory = () => {
+    const categoryID = categoryToEdit.ID
     api.delete('/auth/categories/' + categoryID)
-      .then(() => setCategoriesChips(
-        (prevState => prevState.filter(category => category.ID !== categoryID))
-      ))
+      .then(() => {
+        setCategoriesChips((prevState => prevState.filter(category => category.ID !== categoryID)))
+        handleEditDialogClose()
+      })
       .catch(err => console.log(err))
   }
 
-  const handleNameChange = (value) => {
-    setNewCategoryName(value)
+  const handleCategoryNameEdit = (value) => {
+    setTypedCategoryName(value)
     let errorFound = false
-    for(let i = 0; i < categoriesChips.length; i++)
+    for (let i = 0; i < categoriesChips.length; i++)
       if (categoriesChips[i].title === value)
         errorFound = true
     if (errorFound)
-      setNewNameErrorText("Duplicate name found")
+      setNameErrorText("Duplicate name found")
     else
-      setNewNameErrorText("")
+      setNameErrorText("")
   }
 
+  const updateCategory = () => {
+    api.put("/auth/categories", qs.stringify({
+      categoryID: categoryToEdit.ID,
+      title: typedCategoryName
+    })).then(res => {
+      let updatedCategory = res.data.category
+      setCategoriesChips((prevState => prevState.map(category => {
+        if (category.ID === updatedCategory.ID)
+          return updatedCategory
+        return category
+      })))
+      handleEditDialogClose()
+    })
+  }
+
+  const handleEditDialogOpen = (category) => {
+    setTypedCategoryName(category.title)
+    setCategoryToEdit(category)
+    setConfirmDelete(false)
+    setNameErrorText("")
+    setOpenEditDialog(true)
+  }
+
+  const handleEditDialogClose = () => {
+    setOpenEditDialog(false)
+    setConfirmDelete(false)
+    setTypedCategoryName("")
+    setNameErrorText("")
+    setCategoryToEdit({})
+  }
 
   return (
     <div>
@@ -53,13 +90,25 @@ const CategoriesChipsContainer = () => {
         categoriesChips={categoriesChips}
         showTextField={showTextField}
         setShowTextField={setShowTextField}
-        newCategoryName={newCategoryName}
-        setNewCategoryName={(value) => setNewCategoryName(value)}
+
+        typedCategoryName={typedCategoryName}
+        setTypedCategoryName={(value) => setTypedCategoryName(value)}
+
+        handleNameChange={handleCategoryNameEdit}
+        nameError={nameErrorText.length > 0}
+        nameErrorText={nameErrorText}
+
         createNewCategory={createNewCategory}
         deleteCategory={deleteCategory}
-        handleNameChange={handleNameChange}
-        newNameError={newNameErrorText.length > 0}
-        newNameErrorText={newNameErrorText}
+
+        openEditDialog={openEditDialog}
+        handleEditDialogOpen={handleEditDialogOpen}
+        handleEditDialogClose={handleEditDialogClose}
+
+        confirmDelete={confirmDelete}
+        setConfirmDelete={setConfirmDelete}
+
+        updateCategory={updateCategory}
       />
     </div>
   );
