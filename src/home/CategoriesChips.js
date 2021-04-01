@@ -47,9 +47,10 @@ const CategoriesChips = props => {
         <li key="-1">
           {!props.showTextField && <Chip
             icon={<AddIcon/>}
-            label="Create Category"
+            label={(props.categoriesChips.length < 10) ? "Create Category" : "Maximum 10 categories"}
             onClick={() => props.setShowTextField(true)}
             className={classes.chip}
+            disabled={props.categoriesChips.length >= 10}
           />}
         </li>
         <li key="-2">
