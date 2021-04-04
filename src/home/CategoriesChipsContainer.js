@@ -3,9 +3,7 @@ import api from "../gateways/api";
 import qs from "qs";
 import CategoriesChips from "./CategoriesChips";
 
-const CategoriesChipsContainer = () => {
-  const [categoriesChips, setCategoriesChips] = useState([]);
-
+const CategoriesChipsContainer = ({categories, setCategories}) => {
   const [showTextField, setShowTextField] = useState(false);
   const [typedCategoryName, setTypedCategoryName] = useState('');  // used for new or edited names
   const [nameErrorText, setNameErrorText] = useState('');
@@ -17,14 +15,14 @@ const CategoriesChipsContainer = () => {
   useEffect(() => {
     api.get("/auth/categories")
       .then(res => {
-        setCategoriesChips(res.data.categories)
+        setCategories(res.data.categories)
       }).catch(err => console.log(err))
-  }, [])
+  }, [setCategories])
 
   const createNewCategory = () => {
     api.post('/auth/categories', qs.stringify({title: typedCategoryName}))
       .then(res => {
-        setCategoriesChips(prevState => [...prevState, res.data.category])
+        setCategories(prevState => [...prevState, res.data.category])
         setShowTextField(false)
         setTypedCategoryName("")
       })
@@ -35,7 +33,7 @@ const CategoriesChipsContainer = () => {
     const categoryID = categoryToEdit.ID
     api.delete('/auth/categories/' + categoryID)
       .then(() => {
-        setCategoriesChips((prevState => prevState.filter(category => category.ID !== categoryID)))
+        setCategories((prevState => prevState.filter(category => category.ID !== categoryID)))
         handleEditDialogClose()
       })
       .catch(err => console.log(err))
@@ -44,8 +42,8 @@ const CategoriesChipsContainer = () => {
   const handleCategoryNameEdit = (value) => {
     setTypedCategoryName(value)
     let errorFound = false
-    for (let i = 0; i < categoriesChips.length; i++)
-      if (categoriesChips[i].title === value)
+    for (let i = 0; i < categories.length; i++)
+      if (categories[i].title === value)
         errorFound = true
     if (errorFound)
       setNameErrorText("Duplicate name found")
@@ -59,7 +57,7 @@ const CategoriesChipsContainer = () => {
       title: typedCategoryName
     })).then(res => {
       let updatedCategory = res.data.category
-      setCategoriesChips((prevState => prevState.map(category => {
+      setCategories((prevState => prevState.map(category => {
         if (category.ID === updatedCategory.ID)
           return updatedCategory
         return category
@@ -87,7 +85,7 @@ const CategoriesChipsContainer = () => {
   return (
     <div>
       <CategoriesChips
-        categoriesChips={categoriesChips}
+        categoriesChips={categories}
         showTextField={showTextField}
         setShowTextField={setShowTextField}
 

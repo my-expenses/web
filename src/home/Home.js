@@ -3,6 +3,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import CategoriesChipsContainer from "./CategoriesChipsContainer";
+import TransactionsContainer from "./TransactionsContainer";
 
 const Home = (props) => {
   return (
@@ -10,7 +11,10 @@ const Home = (props) => {
       <Container>
         <Grid container spacing={3}>
           <Grid item>
-            <CategoriesChipsContainer />
+            <CategoriesChipsContainer
+              categories={props.categories}
+              setCategories={props.setCategories}
+            />
           </Grid>
         </Grid>
         <Grid container direction="row" spacing={3}>
@@ -29,8 +33,9 @@ const Home = (props) => {
             </MuiPickersUtilsProvider>
           </Grid>
           <Grid item xs={12} sm={6} md={9}>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum explicabo quae tempore. At blanditiis
-              consequatur cum dicta dolores ex harum ipsa labore minus, nihil nulla pariatur quam sed, sit tenetur.</p>
+            <TransactionsContainer
+              categories={props.categories}
+            />
           </Grid>
         </Grid>
 
