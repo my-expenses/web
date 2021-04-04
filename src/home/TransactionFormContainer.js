@@ -1,9 +1,11 @@
 import TransactionForm from "./TransactionForm";
 import {useEffect, useState} from "react";
+import api from "../gateways/api";
+import qs from "qs";
 
 const TransactionFormContainer = ({categories}) => {
   const uncategorized = {
-    ID: -1,
+    ID: 0,
     title: "Uncategorized"
   }
   const [title, setTitle] = useState("")
@@ -20,7 +22,21 @@ const TransactionFormContainer = ({categories}) => {
     })
     if (!foundSelectedCategory)
       setCategory(uncategorized)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categories])
+
+  const handleSubmit = () => {
+    console.log(amount)
+    api.post("/auth/transactions", qs.stringify({
+      transactionTitle: title,
+      amount: amount,
+      categoryID: category.ID,
+      type: type,
+      date: date.toISOString(),
+    }))
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+  }
 
   return (
     <div>
@@ -36,6 +52,8 @@ const TransactionFormContainer = ({categories}) => {
         date={date}
         setDate={setDate}
         categories={categories}
+
+        handleSubmit={handleSubmit}
       />
     </div>
   );

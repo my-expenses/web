@@ -5,6 +5,7 @@ import MomentUtils from "@date-io/moment";
 import moment from "moment";
 import PropTypes from 'prop-types';
 import {Autocomplete} from "@material-ui/lab";
+import Button from "@material-ui/core/Button";
 
 const TransactionForm = props => {
   return (
@@ -33,7 +34,7 @@ const TransactionForm = props => {
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <Autocomplete
-            options={[{ID: -1, title: "Uncategorized"}, ...props.categories]}
+            options={[{ID: 0, title: "Uncategorized"}, ...props.categories]}
             disableClearable
             getOptionLabel={(option) => option.title}
             getOptionSelected={(option, value) => option.ID === value.ID }
@@ -70,7 +71,13 @@ const TransactionForm = props => {
             />
           </MuiPickersUtilsProvider>
         </Grid>
-
+        <Grid container>
+          <Grid item xs={6}>
+            <Button variant="contained" color="primary" fullWidth onClick={() =>props.handleSubmit()}>
+              Save
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
 
     </div>
@@ -86,6 +93,8 @@ TransactionForm.propTypes = {
   setCategory: PropTypes.func,
   type: PropTypes.number,
   setType: PropTypes.func,
+
+  handleSubmit: PropTypes.func
 };
 
 export default TransactionForm;
