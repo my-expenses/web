@@ -1,20 +1,30 @@
-import {Paper} from "@material-ui/core";
 import TransactionFormContainer from "./TransactionFormContainer";
+import TransactionCardContainer from "./TransactionCardContainer";
+import Grid from "@material-ui/core/Grid";
+import {useState} from "react";
 
 const Transactions = props => {
+  const [newTransaction, setNewTransaction] = useState(null)
+
   return (
     <div>
-        <Paper>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
           <TransactionFormContainer
             categories={props.categories}
+            setNewTransaction={setNewTransaction}
           />
-        </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <TransactionCardContainer
+            newTransaction={newTransaction}
+          />
+        </Grid>
+      </Grid>
     </div>
   );
 };
 
-Transactions.propTypes = {
-
-};
+Transactions.propTypes = {};
 
 export default Transactions;

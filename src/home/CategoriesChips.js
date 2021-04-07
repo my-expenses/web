@@ -8,7 +8,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Divider, FormControlLabel, FormGroup,
+  Divider, FormControlLabel,
   Paper,
   TextField
 } from "@material-ui/core";

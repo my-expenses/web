@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import api from "../gateways/api";
 import qs from "qs";
 
-const TransactionFormContainer = ({categories}) => {
+const TransactionFormContainer = ({categories, setNewTransaction}) => {
   const uncategorized = {
     ID: 0,
     title: "Uncategorized"
@@ -26,7 +26,6 @@ const TransactionFormContainer = ({categories}) => {
   }, [categories])
 
   const handleSubmit = () => {
-    console.log(amount)
     api.post("/auth/transactions", qs.stringify({
       transactionTitle: title,
       amount: amount,
@@ -34,7 +33,9 @@ const TransactionFormContainer = ({categories}) => {
       type: type,
       date: date.toISOString(),
     }))
-      .then(res => console.log(res))
+      .then(res => {
+        setNewTransaction(res.data.transaction)
+      })
       .catch(err => console.log(err))
   }
 
