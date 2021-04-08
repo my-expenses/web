@@ -6,6 +6,9 @@ import {useButtonValidation} from "./useButtonValidation";
 import {useNameValidation} from "./useNameValidation";
 import api from "../../gateways/api";
 import qs from "qs";
+import {useDispatch} from "react-redux";
+import {errorAction, successAction} from "../../actions/MessageActions";
+import {useHistory} from "react-router-dom";
 
 const RegisterContainer = () => {
 
@@ -19,6 +22,9 @@ const RegisterContainer = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
 
   const [emailError, setEmailError] = useState('Please enter a valid email')
+
+  const dispatch = useDispatch()
+  const history = useHistory();
 
   const [validLength, hasNumber, upperCase, lowerCase, match, specialChar,] =
     usePasswordValidation({
@@ -45,9 +51,10 @@ const RegisterContainer = () => {
       password: password,
       confirmPassword: confirmPassword,
     })).then(res => {
-      console.log(res)
+      dispatch(successAction("User created"))
+      history.push("/login")
     }).catch(err => {
-      console.log(err)
+      dispatch(errorAction(err.response.data.message))
     })
   }
 

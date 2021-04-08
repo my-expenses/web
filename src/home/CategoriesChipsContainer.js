@@ -2,6 +2,8 @@ import {useEffect, useState} from "react";
 import api from "../gateways/api";
 import qs from "qs";
 import CategoriesChips from "./CategoriesChips";
+import {useDispatch} from "react-redux";
+import {errorAction, successAction} from "../actions/MessageActions";
 
 const CategoriesChipsContainer = ({categories, setCategories}) => {
   const [showTextField, setShowTextField] = useState(false);
@@ -11,6 +13,8 @@ const CategoriesChipsContainer = ({categories, setCategories}) => {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [categoryToEdit, setCategoryToEdit] = useState({});
   const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     api.get("/auth/categories")
@@ -25,8 +29,11 @@ const CategoriesChipsContainer = ({categories, setCategories}) => {
         setCategories(prevState => [...prevState, res.data.category])
         setShowTextField(false)
         setTypedCategoryName("")
+        dispatch(successAction("Category created"))
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        dispatch(errorAction(err.response.data.message))
+      })
   }
 
   const deleteCategory = () => {
@@ -34,9 +41,12 @@ const CategoriesChipsContainer = ({categories, setCategories}) => {
     api.delete('/auth/categories/' + categoryID)
       .then(() => {
         setCategories((prevState => prevState.filter(category => category.ID !== categoryID)))
+        dispatch(successAction("Category deleted"))
         handleEditDialogClose()
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        dispatch(errorAction(err.response.data.message))
+      })
   }
 
   const handleCategoryNameEdit = (value) => {
@@ -56,6 +66,7 @@ const CategoriesChipsContainer = ({categories, setCategories}) => {
       categoryID: categoryToEdit.ID,
       title: typedCategoryName
     })).then(res => {
+      dispatch(successAction("Category updated"))
       let updatedCategory = res.data.category
       setCategories((prevState => prevState.map(category => {
         if (category.ID === updatedCategory.ID)

@@ -5,8 +5,15 @@ import MuiAlert from '@material-ui/lab/Alert';
 
 const ErrorMessage = () => {
   const message = useSelector(state => state.message)
-  const error = useSelector(state => state.error)
-  const success = useSelector(state => state.success)
+
+  const show = useSelector(state => state.success || state.error)
+  const severity = useSelector(state => {
+    if (state.success)
+      return "success"
+    if (state.error)
+      return "error"
+
+  })
   const dispatch = useDispatch()
 
   const handleClose = () => {
@@ -17,10 +24,10 @@ const ErrorMessage = () => {
     <div>
       <Snackbar
         anchorOrigin={{vertical: "top", horizontal: "center"}}
-        open={success || error}
+        open={show}
         onClose={() => handleClose()}
       >
-        <MuiAlert variant="filled" severity={(success) ? "success" : "error"}>{message}</MuiAlert>
+        <MuiAlert variant="filled" severity={severity}>{message}</MuiAlert>
       </Snackbar>
     </div>
   );

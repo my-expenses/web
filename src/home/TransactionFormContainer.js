@@ -2,6 +2,8 @@ import TransactionForm from "./TransactionForm";
 import {useEffect, useState} from "react";
 import api from "../gateways/api";
 import qs from "qs";
+import {useDispatch} from "react-redux";
+import {errorAction, successAction} from "../actions/MessageActions";
 
 const TransactionFormContainer = ({categories, setNewTransaction}) => {
   const uncategorized = {
@@ -13,6 +15,7 @@ const TransactionFormContainer = ({categories, setNewTransaction}) => {
   const [category, setCategory] = useState(uncategorized)
   const [type, setType] = useState(0)  // 0 for expenses, 1 for income
   const [date, setDate] = useState(new Date())
+  const dispatch = useDispatch()
 
   useEffect(() => {
     let foundSelectedCategory = false
@@ -34,9 +37,10 @@ const TransactionFormContainer = ({categories, setNewTransaction}) => {
       date: date.toISOString(),
     }))
       .then(res => {
+        dispatch(successAction("Transaction created"))
         setNewTransaction(res.data.transaction)
       })
-      .catch(err => console.log(err))
+      .catch(err => dispatch(errorAction(err.response.data.message)))
   }
 
   return (

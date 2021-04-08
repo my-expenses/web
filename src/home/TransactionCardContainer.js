@@ -1,6 +1,8 @@
 import TransactionCard from "./TransactionCard";
 import {useEffect, useState} from "react";
 import api from "../gateways/api";
+import {useDispatch} from "react-redux";
+import {errorAction, successAction} from "../actions/MessageActions";
 
 const TransactionCardContainer = (props) => {
   const [page, setPage] = useState(1)
@@ -9,6 +11,8 @@ const TransactionCardContainer = (props) => {
   const [transactions, setTransactions] = useState([])
   const [totalTransactions, setTotalTransactions] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     api.get("/auth/transactions", {
@@ -35,9 +39,10 @@ const TransactionCardContainer = (props) => {
   const deleteTransaction = (transactionID) => {
     api.delete(`/auth/transactions/${transactionID}`)
       .then(res => {
+        dispatch(successAction("Transaction deleted"))
         setTransactions(prevState => prevState.filter(transaction => transaction.ID !== transactionID))
       })
-      .catch(err => console.log(err))
+      .catch(err => dispatch(errorAction(err.response.data.message)))
   }
 
   return (
