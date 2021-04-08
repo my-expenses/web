@@ -3,11 +3,14 @@ import { useHistory } from "react-router-dom";
 import Login from "./Login";
 import api from "../../gateways/api";
 import qs from "qs";
+import {errorAction} from "../../actions/MessageActions";
+import {useDispatch} from "react-redux";
 
-const LoginContainer = () => {
+const LoginContainer = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
+  const dispatch = useDispatch()
 
   const submitForm = () => {
     api.post("/users/login", qs.stringify({
@@ -19,7 +22,9 @@ const LoginContainer = () => {
         localStorage.setItem("token", token)
         history.push("/")
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        dispatch(errorAction(err.response.data.message))
+      })
   }
 
   return (

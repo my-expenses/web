@@ -3,12 +3,14 @@ import LoginContainer from "./users/login/LoginContainer";
 import RegisterContainer from "./users/register/RegisterContainer";
 import HomeContainer from "./home/HomeContainer";
 import CustomAppBar from "./utils/CustomAppBar";
+import ErrorMessage from "./utils/ErrorMessage";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <CustomAppBar />
+        <ErrorMessage />
         <div className="content">
           <Switch>
             <Route exact path="/login">
