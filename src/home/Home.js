@@ -28,7 +28,7 @@ const Home = (props) => {
                 openTo="month"
                 views={["year", "month"]}
                 value={props.month}
-                onChange={val => props.setMonth(val)}
+                onChange={val => props.handleMonthChange(val)}
               />
             </MuiPickersUtilsProvider>
           </Grid>

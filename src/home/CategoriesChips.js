@@ -4,7 +4,6 @@ import AddIcon from "@material-ui/icons/Add";
 import {
   Checkbox,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
@@ -124,14 +123,6 @@ const CategoriesChips = props => {
           </Grid>
 
         </DialogContent>
-        <DialogActions>
-          <Button color="primary">
-            Disagree
-          </Button>
-          <Button color="primary" autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
       </Dialog>
 
     </div>

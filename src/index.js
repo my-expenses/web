@@ -5,9 +5,9 @@ import App from './App';
 
 import {Provider} from "react-redux";
 import {createStore} from "redux";
-import errorReducer from "./reducers/errorReducer";
+import allReducers from "./reducers";
 
-const store = createStore(errorReducer)
+const store = createStore(allReducers)
 
 ReactDOM.render(
   <Provider store={store}>

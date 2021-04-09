@@ -4,13 +4,14 @@ import {closeAction} from "../actions/MessageActions";
 import MuiAlert from '@material-ui/lab/Alert';
 
 const ErrorMessage = () => {
-  const message = useSelector(state => state.message)
+  const message = useSelector(state => state.snackbar.message)
 
-  const show = useSelector(state => state.success || state.error)
+  const show = useSelector(state => state.snackbar.success || state.snackbar.error)
+
   const severity = useSelector(state => {
-    if (state.success)
+    if (state.snackbar.success)
       return "success"
-    if (state.error)
+    if (state.snackbar.error)
       return "error"
 
   })

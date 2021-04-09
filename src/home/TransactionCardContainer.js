@@ -1,39 +1,17 @@
 import TransactionCard from "./TransactionCard";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import api from "../gateways/api";
 import {useDispatch} from "react-redux";
 import {errorAction, successAction} from "../actions/MessageActions";
 
 const TransactionCardContainer = (props) => {
-  const [page, setPage] = useState(1)
-  const itemsPerPage = 10
-
-  const [transactions, setTransactions] = useState([])
-  const [totalTransactions, setTotalTransactions] = useState(0)
-  const [totalPages, setTotalPages] = useState(0)
-
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    api.get("/auth/transactions", {
-      params: {
-        page: page,
-        itemsPerPage: itemsPerPage,
-        sortBy: ["created_at"],
-        sortDesc: ["true"]
-      }
-    }).then(res => {
-      setTransactions(res.data.transactions)
-      setTotalTransactions(res.data.numberOfRecords)
-      setTotalPages(Math.ceil(totalTransactions / itemsPerPage))
-    })
-  }, [page])
-
+  const setTransactions = props.setTransactions
 
   useEffect(() => {
     if (props.newTransaction !== null)
       setTransactions(prevState => [...prevState, props.newTransaction])
-  }, [props.newTransaction])
+  }, [props.newTransaction, setTransactions])
 
 
   const deleteTransaction = (transactionID) => {
@@ -48,11 +26,11 @@ const TransactionCardContainer = (props) => {
   return (
     <div>
       <TransactionCard
-        transactions={transactions}
-        totalTransactions={totalTransactions}
-        page={page}
-        setPage={setPage}
-        totalPages={totalPages}
+        transactions={props.transactions}
+        totalTransactions={props.totalTransactions}
+        page={props.page}
+        setPage={props.setPage}
+        totalPages={props.totalPages}
 
         deleteTransaction={deleteTransaction}
       />
