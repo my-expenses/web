@@ -33,7 +33,7 @@ const TransactionCard = props => {
                   subheaderTypographyProps={{variant: "subtitle1"}}
                   action={
                     <Chip
-                      label={(data.categoryID === null) ? "-" : data.category.title}
+                      label={(data.categoryID === null) ? "-" : props.categories.find(category => category.ID === data.categoryID).title}
                       color="primary"
                       className={classes.chipText}
                     />

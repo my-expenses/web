@@ -63,11 +63,10 @@ const TransactionForm = props => {
             <DateTimePicker
               value={props.date}
               fullWidth
-              disableFuture
               onChange={props.setDate}
               label="Transaction Date"
-              minDate={new moment().startOf("month")}
-              showTodayButton
+              minDate={new moment(props.selectedMonth).startOf("month")}
+              maxDate={new moment(props.selectedMonth).endOf(props.maxDate)}
             />
           </MuiPickersUtilsProvider>
         </Grid>

@@ -2,7 +2,7 @@ import TransactionForm from "./TransactionForm";
 import {useEffect, useState} from "react";
 import api from "../gateways/api";
 import qs from "qs";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {errorAction, successAction} from "../actions/MessageActions";
 
 const TransactionFormContainer = ({categories, setNewTransaction}) => {
@@ -16,6 +16,19 @@ const TransactionFormContainer = ({categories, setNewTransaction}) => {
   const [type, setType] = useState(0)  // 0 for expenses, 1 for income
   const [date, setDate] = useState(new Date())
   const dispatch = useDispatch()
+  const selectedMonth = useSelector(state => state.selectedMonth)
+  const maxDate = useSelector(state => {
+    if (state.selectedMonth.getMonth() === new Date().getMonth())
+      return "day"
+    return "month"
+  })
+
+  useEffect(() => {
+    if (selectedMonth.getMonth() !== new Date().getMonth())
+      setDate(new Date(selectedMonth.getFullYear(), selectedMonth.getMonth(), 1))
+    else
+      setDate(new Date())
+  }, [selectedMonth])
 
   useEffect(() => {
     let foundSelectedCategory = false
@@ -39,8 +52,16 @@ const TransactionFormContainer = ({categories, setNewTransaction}) => {
       .then(res => {
         dispatch(successAction("Transaction created"))
         setNewTransaction(res.data.transaction)
+        clearForm()
       })
       .catch(err => dispatch(errorAction(err.response.data.message)))
+  }
+
+  const clearForm = () => {
+    setTitle("")
+    setAmount("0")
+    setCategory(uncategorized)
+    setType(0)
   }
 
   return (
@@ -57,6 +78,8 @@ const TransactionFormContainer = ({categories, setNewTransaction}) => {
         date={date}
         setDate={setDate}
         categories={categories}
+        selectedMonth={selectedMonth}
+        maxDate={maxDate}
 
         handleSubmit={handleSubmit}
       />

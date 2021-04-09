@@ -25,7 +25,7 @@ const TransactionsContainer = (props) => {
     }).then(res => {
       setTransactions(res.data.transactions)
       setTotalTransactions(res.data.numberOfRecords)
-      setTotalPages(Math.ceil(totalTransactions / itemsPerPage))
+      setTotalPages(Math.ceil(res.data.numberOfRecords / itemsPerPage))
     })
   }, [page, selectedMonth])
 

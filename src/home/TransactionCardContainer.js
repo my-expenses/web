@@ -26,6 +26,7 @@ const TransactionCardContainer = (props) => {
   return (
     <div>
       <TransactionCard
+        categories={props.categories}
         transactions={props.transactions}
         totalTransactions={props.totalTransactions}
         page={props.page}
