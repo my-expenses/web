@@ -4,8 +4,9 @@ import api from "../gateways/api";
 import qs from "qs";
 import {useDispatch, useSelector} from "react-redux";
 import {errorAction, successAction} from "../actions/MessageActions";
+import {addedTransaction} from "../actions/TransactionActions";
 
-const TransactionFormContainer = ({setNewTransaction}) => {
+const TransactionFormContainer = () => {
   const uncategorized = {
     ID: 0,
     title: "Uncategorized"
@@ -52,7 +53,7 @@ const TransactionFormContainer = ({setNewTransaction}) => {
     }))
       .then(res => {
         dispatch(successAction("Transaction created"))
-        setNewTransaction(res.data.transaction)
+        dispatch(addedTransaction(res.data.transaction))
         clearForm()
       })
       .catch(err => dispatch(errorAction(err.response.data.message)))

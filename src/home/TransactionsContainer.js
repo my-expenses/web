@@ -1,19 +1,18 @@
 import Transactions from "./Transactions";
 import {useEffect, useState} from "react";
 import api from "../gateways/api";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchedTransactions} from "../actions/TransactionActions";
 
-const TransactionsContainer = (props) => {
+const TransactionsContainer = () => {
   const [page, setPage] = useState(1)
   const itemsPerPage = 10
-
-  const [transactions, setTransactions] = useState([])
-  const [totalTransactions, setTotalTransactions] = useState(0)
-  const [totalPages, setTotalPages] = useState(0)
 
   const selectedMonth = useSelector(state => state.selectedMonth)
   const [selectedTab, setSelectedTab] = useState("0")
   const categories = useSelector(state => state.categories)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     api.get("/auth/transactions", {
@@ -25,23 +24,18 @@ const TransactionsContainer = (props) => {
         month: new Date(selectedMonth).toISOString(),
       }
     }).then(res => {
-      setTransactions(res.data.transactions)
-      setTotalTransactions(res.data.numberOfRecords)
-      setTotalPages(Math.ceil(res.data.numberOfRecords / itemsPerPage))
+      dispatch(fetchedTransactions({
+        transactions: res.data.transactions,
+        totalTransactions: res.data.numberOfRecords,
+      }))
     })
   }, [page, selectedMonth, categories])
 
   return (
     <div>
       <Transactions
-        transactions={transactions}
-        totalTransactions={totalTransactions}
-        totalPages={totalPages}
-
         page={page}
         setPage={setPage}
-
-        setTransactions={setTransactions}
 
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}

@@ -14,7 +14,7 @@ const TransactionCard = props => {
   return (
     <div>
       <Grid container spacing={2}>
-        {props.transactions.map(data => {
+        {props.transactionsData.transactions.map(data => {
           return (
             <Grid item key={data.ID} xs={12} lg={6}>
               <Card className={classes.card}>
@@ -50,7 +50,7 @@ const TransactionCard = props => {
         })}
 
         <Grid container justify="center">
-          <Pagination count={props.totalPages} page={props.page} onChange={(e, value) => props.setPage(value)}/>
+          <Pagination count={props.transactionsData.totalPages} page={props.page} onChange={(e, value) => props.setPage(value)}/>
         </Grid>
       </Grid>
 
@@ -59,11 +59,9 @@ const TransactionCard = props => {
 };
 
 TransactionCard.propTypes = {
-  transactions: PropTypes.array,
-  totalTransactions: PropTypes.number,
   page: PropTypes.number,
   setPage: PropTypes.func,
-  totalPages: PropTypes.number,
+  transactionsData: PropTypes.object,
 
   deleteTransaction: PropTypes.func,
 }
