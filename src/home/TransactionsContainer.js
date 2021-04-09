@@ -12,6 +12,8 @@ const TransactionsContainer = (props) => {
   const [totalPages, setTotalPages] = useState(0)
 
   const selectedMonth = useSelector(state => state.selectedMonth)
+  const [selectedTab, setSelectedTab] = useState("0")
+  const categories = useSelector(state => state.categories)
 
   useEffect(() => {
     api.get("/auth/transactions", {
@@ -27,7 +29,7 @@ const TransactionsContainer = (props) => {
       setTotalTransactions(res.data.numberOfRecords)
       setTotalPages(Math.ceil(res.data.numberOfRecords / itemsPerPage))
     })
-  }, [page, selectedMonth])
+  }, [page, selectedMonth, categories])
 
   return (
     <div>
@@ -40,6 +42,9 @@ const TransactionsContainer = (props) => {
         setPage={setPage}
 
         setTransactions={setTransactions}
+
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
       />
     </div>
   );
