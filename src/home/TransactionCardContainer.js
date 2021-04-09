@@ -1,12 +1,13 @@
 import TransactionCard from "./TransactionCard";
 import {useEffect} from "react";
 import api from "../gateways/api";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {errorAction, successAction} from "../actions/MessageActions";
 
 const TransactionCardContainer = (props) => {
   const dispatch = useDispatch()
   const setTransactions = props.setTransactions
+  const categories = useSelector(state => state.categories)
 
   useEffect(() => {
     if (props.newTransaction !== null)
@@ -26,7 +27,7 @@ const TransactionCardContainer = (props) => {
   return (
     <div>
       <TransactionCard
-        categories={props.categories}
+        categories={categories}
         transactions={props.transactions}
         totalTransactions={props.totalTransactions}
         page={props.page}

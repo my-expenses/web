@@ -5,7 +5,7 @@ import qs from "qs";
 import {useDispatch, useSelector} from "react-redux";
 import {errorAction, successAction} from "../actions/MessageActions";
 
-const TransactionFormContainer = ({categories, setNewTransaction}) => {
+const TransactionFormContainer = ({setNewTransaction}) => {
   const uncategorized = {
     ID: 0,
     title: "Uncategorized"
@@ -22,6 +22,7 @@ const TransactionFormContainer = ({categories, setNewTransaction}) => {
       return "day"
     return "month"
   })
+  const categories = useSelector(state => state.categories)
 
   useEffect(() => {
     if (selectedMonth.getMonth() !== new Date().getMonth())

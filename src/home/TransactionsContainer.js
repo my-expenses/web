@@ -32,7 +32,6 @@ const TransactionsContainer = (props) => {
   return (
     <div>
       <Transactions
-        categories={props.categories}
         transactions={transactions}
         totalTransactions={totalTransactions}
         totalPages={totalPages}

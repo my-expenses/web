@@ -2,10 +2,11 @@ import {useEffect, useState} from "react";
 import api from "../gateways/api";
 import qs from "qs";
 import CategoriesChips from "./CategoriesChips";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {errorAction, successAction} from "../actions/MessageActions";
+import {addedCategory, fetchedCategories, removedCategory, updatedCategory} from "../actions/CategoryActions";
 
-const CategoriesChipsContainer = ({categories, setCategories}) => {
+const CategoriesChipsContainer = () => {
   const [showTextField, setShowTextField] = useState(false);
   const [typedCategoryName, setTypedCategoryName] = useState('');  // used for new or edited names
   const [nameErrorText, setNameErrorText] = useState('');
@@ -15,18 +16,19 @@ const CategoriesChipsContainer = ({categories, setCategories}) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const dispatch = useDispatch()
+  const categories = useSelector(state => state.categories)
 
   useEffect(() => {
     api.get("/auth/categories")
       .then(res => {
-        setCategories(res.data.categories)
+        dispatch(fetchedCategories(res.data.categories))
       }).catch(err => console.log(err))
-  }, [setCategories])
+  }, [])
 
   const createNewCategory = () => {
     api.post('/auth/categories', qs.stringify({title: typedCategoryName}))
       .then(res => {
-        setCategories(prevState => [...prevState, res.data.category])
+        dispatch(addedCategory(res.data.category))
         setShowTextField(false)
         setTypedCategoryName("")
         dispatch(successAction("Category created"))
@@ -38,9 +40,9 @@ const CategoriesChipsContainer = ({categories, setCategories}) => {
 
   const deleteCategory = () => {
     const categoryID = categoryToEdit.ID
-    api.delete('/auth/categories/' + categoryID)
+    api.delete(`/auth/categories/${categoryID}`)
       .then(() => {
-        setCategories((prevState => prevState.filter(category => category.ID !== categoryID)))
+        dispatch(removedCategory(categoryID))
         dispatch(successAction("Category deleted"))
         handleEditDialogClose()
       })
@@ -67,12 +69,8 @@ const CategoriesChipsContainer = ({categories, setCategories}) => {
       title: typedCategoryName
     })).then(res => {
       dispatch(successAction("Category updated"))
-      let updatedCategory = res.data.category
-      setCategories((prevState => prevState.map(category => {
-        if (category.ID === updatedCategory.ID)
-          return updatedCategory
-        return category
-      })))
+      let newUpdatedCategory = res.data.category
+      dispatch(updatedCategory(newUpdatedCategory))
       handleEditDialogClose()
     })
   }

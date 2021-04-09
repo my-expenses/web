@@ -11,13 +11,11 @@ const Transactions = props => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TransactionFormContainer
-            categories={props.categories}
             setNewTransaction={setNewTransaction}
           />
         </Grid>
         <Grid item xs={12}>
           <TransactionCardContainer
-            categories={props.categories}
             transactions={props.transactions}
             totalTransactions={props.totalTransactions}
             totalPages={props.totalPages}

@@ -5,7 +5,6 @@ import {changeMonth} from "../actions/MonthActions";
 
 const HomeContainer = () => {
   const [month, setMonth] = useState(new Date())
-  const [categories, setCategories] = useState([]);
 
   const dispatch = useDispatch()
 
@@ -19,8 +18,6 @@ const HomeContainer = () => {
       <Home
         month={month}
         handleMonthChange={handleMonthChange}
-        categories={categories}
-        setCategories={setCategories}
       />
     </div>
   )

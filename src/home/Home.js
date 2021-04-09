@@ -11,10 +11,7 @@ const Home = (props) => {
       <Container>
         <Grid container spacing={3}>
           <Grid item>
-            <CategoriesChipsContainer
-              categories={props.categories}
-              setCategories={props.setCategories}
-            />
+            <CategoriesChipsContainer />
           </Grid>
         </Grid>
         <Grid container direction="row" spacing={3}>
@@ -33,9 +30,7 @@ const Home = (props) => {
             </MuiPickersUtilsProvider>
           </Grid>
           <Grid item xs={12} sm={6} md={8} lg={9}>
-            <TransactionsContainer
-              categories={props.categories}
-            />
+            <TransactionsContainer />
           </Grid>
         </Grid>
 
