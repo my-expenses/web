@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../actions/UserActions";
 import {useHistory} from "react-router-dom";
+import {ReactComponent as Logo} from "../logo.svg"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +41,7 @@ const CustomAppBar = () => {
     <div className={classes.root}>
       <AppBar position="static" className={classes.marginBottom}>
         <Toolbar>
+          <Logo />
           <Typography variant="h6" className={classes.title}>
             Expenses
           </Typography>
