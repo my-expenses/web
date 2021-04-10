@@ -1,5 +1,5 @@
 import axios from "axios";
-import store from "../store";
+import persistedStore from "../store";
 import {logout} from "../actions/UserActions";
 
 const url = process.env.REACT_APP_API_URL;
@@ -23,7 +23,7 @@ api.interceptors.response.use(function (response) {
 }, function (error) {
 
   if (error.response.status === 401 && error.response.data.message === "invalid or expired jwt") {
-    store.dispatch(logout())
+    persistedStore.store.dispatch(logout())
   }
   console.log(error)
   return Promise.reject(error);
