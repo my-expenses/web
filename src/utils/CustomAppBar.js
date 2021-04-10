@@ -5,6 +5,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Button from "@material-ui/core/Button";
+import {useDispatch, useSelector} from "react-redux";
+import {logout} from "../actions/UserActions";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,16 +28,24 @@ const useStyles = makeStyles((theme) => ({
 const CustomAppBar = () => {
   const classes = useStyles();
 
+  const isAuthenticated = useSelector(state => state.userData.loggedIn)
+  const dispatch = useDispatch()
+  const history = useHistory()
+
+  const handleLogoutButton = () => {
+    localStorage.setItem("token", "")
+    dispatch(logout())
+    history.push("/login")
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.marginBottom}>
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" className={classes.title}>
             Expenses
           </Typography>
+          {isAuthenticated && <Button color="inherit" onClick={() => handleLogoutButton()}>Logout</Button>}
         </Toolbar>
       </AppBar>
     </div>

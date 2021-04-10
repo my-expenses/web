@@ -4,6 +4,7 @@ import RegisterContainer from "./users/register/RegisterContainer";
 import HomeContainer from "./home/HomeContainer";
 import CustomAppBar from "./utils/CustomAppBar";
 import ErrorMessage from "./utils/ErrorMessage";
+import PrivateRoute from "./utils/PrivateRoute";
 
 function App() {
   return (
@@ -19,9 +20,8 @@ function App() {
             <Route exact path="/register">
               <RegisterContainer />
             </Route>
-            <Route exact path="/">
-              <HomeContainer />
-            </Route>
+
+            <PrivateRoute exact component={HomeContainer} path="/" />
           </Switch>
         </div>
       </div>
