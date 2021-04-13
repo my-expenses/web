@@ -2,15 +2,22 @@ const initialState = {
   transactions: [],
   totalTransactions: 0,
   totalPages: 0,
+  loading: false,
 }
 
 const transactionsReducer = (state = initialState, action) => {
   switch(action.type) {
+    case "STARTED_FETCH":
+      return {
+        ...state,
+        loading: true,
+      }
     case "FETCHED_TRANSACTIONS":
       return {
         transactions: action.transactions,
         totalTransactions: action.totalTransactions,
-        totalPages: Math.ceil(action.totalTransactions / 10)
+        totalPages: Math.ceil(action.totalTransactions / 10),
+        loading: false
       }
     case "ADDED_TRANSACTION":
       return {

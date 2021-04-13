@@ -6,7 +6,7 @@ import Chip from "@material-ui/core/Chip";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import moment from 'moment';
-import {Pagination} from "@material-ui/lab";
+import {Pagination, Skeleton} from "@material-ui/lab";
 import TransactionForm from "./TransactionForm";
 
 const TransactionCard = props => {
@@ -15,6 +15,28 @@ const TransactionCard = props => {
   return (
     <div>
       <Grid container spacing={2}>
+        {props.transactionsData.loading && <Grid container spacing={2}>
+          <Grid item xs={12} lg={6}>
+            <Card>
+              <CardHeader avatar={
+                <Skeleton variant="circle" animation="wave" width={60} height={60}/>
+              } title={<Skeleton variant="text"/>} subheader={<Skeleton variant="text"/>}
+
+              />
+            </Card>
+          </Grid>
+          <Grid item xs={12} lg={6}>
+            <Card>
+              <CardHeader avatar={
+                <Skeleton variant="circle" animation="wave" width={60} height={60}/>
+              } title={<Skeleton variant="text"/>} subheader={<Skeleton variant="text"/>}
+
+              />
+            </Card>
+          </Grid>
+        </Grid>}
+
+
         {!props.categoriesState.loading && props.transactionsData.transactions.map(data => {
           return (
             <Grid item key={data.ID} xs={12} lg={6}>

@@ -1,3 +1,9 @@
+export const startedFetchingTransactions = () => {
+  return {
+    type: "STARTED_FETCH",
+  }
+}
+
 export const fetchedTransactions = transactionsData => {
   return {
     type: "FETCHED_TRANSACTIONS",

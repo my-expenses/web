@@ -2,7 +2,7 @@ import Transactions from "./Transactions";
 import {useEffect, useState} from "react";
 import api from "../gateways/api";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchedTransactions} from "../actions/TransactionActions";
+import {fetchedTransactions, startedFetchingTransactions} from "../actions/TransactionActions";
 
 const TransactionsContainer = () => {
   const [page, setPage] = useState(1)
@@ -15,6 +15,7 @@ const TransactionsContainer = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(startedFetchingTransactions())
     api.get("/auth/transactions", {
       params: {
         page: page,
