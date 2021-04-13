@@ -10,7 +10,7 @@ const TransactionsContainer = () => {
 
   const selectedMonth = useSelector(state => state.selectedMonth)
   const [selectedTab, setSelectedTab] = useState("0")
-  const categories = useSelector(state => state.categories)
+  const categoriesState = useSelector(state => state.categories)
 
   const dispatch = useDispatch()
 
@@ -29,7 +29,7 @@ const TransactionsContainer = () => {
         totalTransactions: res.data.numberOfRecords,
       }))
     })
-  }, [page, selectedMonth, categories])
+  }, [page, selectedMonth, categoriesState])
 
   return (
     <div>

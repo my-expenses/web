@@ -12,9 +12,9 @@ const GroupedTransactions = props => {
   return (
     <div>
       <Grid container spacing={2}>
-        {props.groupedTransactions.map(data => {
+        {!props.categoriesState.loading && props.groupedTransactions.map(data => {
           // find the proper category or assign it to uncategorized
-          let category = props.categories.find(category => category.ID === data.categoryID) ||
+          let category = props.categoriesState.categories.find(category => category.ID === data.categoryID) ||
             {title: "Uncategorized"}
           let avatar = (data.categoryID === null) ? <CloseIcon /> : category.title.toUpperCase().substr(0, 2)
           return (
@@ -46,7 +46,7 @@ const GroupedTransactions = props => {
 };
 
 GroupedTransactions.propTypes = {
-  categories: PropTypes.array,
+  categoriesState: PropTypes.object,
   groupedTransactions: PropTypes.array,
 };
 

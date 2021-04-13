@@ -4,7 +4,13 @@ import qs from "qs";
 import CategoriesChips from "./CategoriesChips";
 import {useDispatch, useSelector} from "react-redux";
 import {errorAction, successAction} from "../actions/MessageActions";
-import {addedCategory, fetchedCategories, removedCategory, updatedCategory} from "../actions/CategoryActions";
+import {
+  addedCategory,
+  fetchedCategories,
+  removedCategory,
+  startCategoriesFetch,
+  updatedCategory
+} from "../actions/CategoryActions";
 
 const CategoriesChipsContainer = () => {
   const [showTextField, setShowTextField] = useState(false);
@@ -16,13 +22,17 @@ const CategoriesChipsContainer = () => {
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const dispatch = useDispatch()
-  const categories = useSelector(state => state.categories)
+  const categoriesState = useSelector(state => state.categories)
 
   useEffect(() => {
-    api.get("/auth/categories")
-      .then(res => {
-        dispatch(fetchedCategories(res.data.categories))
-      }).catch(err => console.log(err))
+    dispatch(startCategoriesFetch())
+    setTimeout(() => {
+      api.get("/auth/categories")
+        .then(res => {
+          dispatch(fetchedCategories(res.data.categories))
+        }).catch(err => console.log(err))
+    }, 1000)
+
   }, [])
 
   const createNewCategory = () => {
@@ -54,8 +64,8 @@ const CategoriesChipsContainer = () => {
   const handleCategoryNameEdit = (value) => {
     setTypedCategoryName(value)
     let errorFound = false
-    for (let i = 0; i < categories.length; i++)
-      if (categories[i].title === value)
+    for (let i = 0; i < categoriesState.categories.length; i++)
+      if (categoriesState.categories[i].title === value)
         errorFound = true
     if (errorFound)
       setNameErrorText("Duplicate name found")
@@ -94,7 +104,7 @@ const CategoriesChipsContainer = () => {
   return (
     <div>
       <CategoriesChips
-        categoriesChips={categories}
+        categoriesState={categoriesState}
         showTextField={showTextField}
         setShowTextField={setShowTextField}
 

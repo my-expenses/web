@@ -34,7 +34,7 @@ const TransactionForm = props => {
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <Autocomplete
-            options={[{ID: 0, title: "Uncategorized"}, ...props.categories]}
+            options={[{ID: 0, title: "Uncategorized"}, ...props.categoriesState.categories]}
             disableClearable
             getOptionLabel={(option) => option.title}
             getOptionSelected={(option, value) => option.ID === value.ID }

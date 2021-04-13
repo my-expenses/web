@@ -6,7 +6,7 @@ import {removedTransaction} from "../actions/TransactionActions";
 
 const TransactionCardContainer = (props) => {
   const dispatch = useDispatch()
-  const categories = useSelector(state => state.categories)
+  const categoriesState = useSelector(state => state.categories)
   const transactionsData = useSelector(state => state.transactionsData)
 
   const deleteTransaction = (transactionID) => {
@@ -21,7 +21,7 @@ const TransactionCardContainer = (props) => {
   return (
     <div>
       <TransactionCard
-        categories={categories}
+        categoriesState={categoriesState}
         page={props.page}
         setPage={props.setPage}
         transactionsData={transactionsData}

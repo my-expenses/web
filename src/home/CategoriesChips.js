@@ -26,7 +26,7 @@ const CategoriesChips = props => {
   return (
     <div>
       <Paper component="ul" className={classes.root}>
-        {props.categoriesChips.map((data) => {
+        {!props.categoriesState.loading && props.categoriesState.categories.map((data) => {
           return (
             <li key={data.ID}>
               <Chip
@@ -46,10 +46,10 @@ const CategoriesChips = props => {
         <li key="-1">
           {!props.showTextField && <Chip
             icon={<AddIcon/>}
-            label={(props.categoriesChips.length < 10) ? "Create Category" : "Maximum 10 categories"}
+            label={(props.categoriesState.categories.length < 10) ? "Create Category" : "Maximum 10 categories"}
             onClick={() => props.setShowTextField(true)}
             className={classes.chip}
-            disabled={props.categoriesChips.length >= 10}
+            disabled={props.categoriesState.categories.length >= 10}
           />}
         </li>
         <li key="-2">
@@ -130,7 +130,7 @@ const CategoriesChips = props => {
 };
 
 CategoriesChips.propTypes = {
-  categoriesChips: PropTypes.array,
+  categoriesState: PropTypes.object,
   showTextField: PropTypes.bool,
   typedCategoryName: PropTypes.string,
   nameError: PropTypes.bool,

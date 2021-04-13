@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import api from "../gateways/api";
 
 const GroupedTransactionsContainer = () => {
-  const categories = useSelector(state => state.categories)
+  const categoriesState = useSelector(state => state.categories)
   const [groupedTransactions, setGroupedTransactions] = useState([])
   const selectedMonth = useSelector(state => state.selectedMonth)
 
@@ -16,12 +16,12 @@ const GroupedTransactionsContainer = () => {
     }).then(res => {
       setGroupedTransactions(res.data.groupedTransactions)
     })
-  }, [selectedMonth, categories])
+  }, [selectedMonth, categoriesState])
 
   return (
     <div>
       <GroupedTransactions
-        categories={categories}
+        categoriesState={categoriesState}
         groupedTransactions={groupedTransactions}
       />
     </div>

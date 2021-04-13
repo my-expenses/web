@@ -14,7 +14,7 @@ const TransactionCard = props => {
   return (
     <div>
       <Grid container spacing={2}>
-        {props.transactionsData.transactions.map(data => {
+        {!props.categoriesState.loading && props.transactionsData.transactions.map(data => {
           return (
             <Grid item key={data.ID} xs={12} lg={6}>
               <Card className={classes.card}>
@@ -33,7 +33,7 @@ const TransactionCard = props => {
                   subheaderTypographyProps={{variant: "subtitle1"}}
                   action={
                     <Chip
-                      label={(data.categoryID === null) ? "-" : props.categories.find(category => category.ID === data.categoryID).title}
+                      label={(data.categoryID === null) ? "-" : props.categoriesState.categories.find(category => category.ID === data.categoryID).title}
                       color="primary"
                       className={classes.chipText}
                     />

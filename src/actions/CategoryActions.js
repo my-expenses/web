@@ -1,3 +1,9 @@
+export const startCategoriesFetch = () => {
+  return {
+    type: "START_FETCH"
+  }
+}
+
 export const fetchedCategories = categories => {
   return {
     type: "FETCHED",

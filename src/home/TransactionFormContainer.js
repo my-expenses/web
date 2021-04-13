@@ -23,7 +23,7 @@ const TransactionFormContainer = () => {
       return "day"
     return "month"
   })
-  const categories = useSelector(state => state.categories)
+  const categoriesState = useSelector(state => state.categories)
 
   useEffect(() => {
     if (selectedMonth.getMonth() !== new Date().getMonth())
@@ -34,14 +34,14 @@ const TransactionFormContainer = () => {
 
   useEffect(() => {
     let foundSelectedCategory = false
-    categories.forEach(availableCategory => {
+    categoriesState.categories.forEach(availableCategory => {
       if (availableCategory.ID === category.ID)
         foundSelectedCategory = true
     })
     if (!foundSelectedCategory)
       setCategory(uncategorized)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categories])
+  }, [categoriesState])
 
   const handleSubmit = () => {
     api.post("/auth/transactions", qs.stringify({
@@ -79,7 +79,7 @@ const TransactionFormContainer = () => {
         setType={setType}
         date={date}
         setDate={setDate}
-        categories={categories}
+        categoriesState={categoriesState}
         selectedMonth={selectedMonth}
         maxDate={maxDate}
 
