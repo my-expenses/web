@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {Card, CardActions, CardHeader, Tooltip} from "@material-ui/core";
+import {Card, CardActions, CardHeader, Dialog, DialogContent, DialogTitle, Tooltip} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import styles from "./TransactionCardStyling";
 import Chip from "@material-ui/core/Chip";
@@ -7,6 +7,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import moment from 'moment';
 import {Pagination} from "@material-ui/lab";
+import TransactionForm from "./TransactionForm";
 
 const TransactionCard = props => {
   const classes = styles()
@@ -40,7 +41,8 @@ const TransactionCard = props => {
                   }
                 />
 
-                <CardActions>
+                <CardActions disableSpacing className={classes.cardActions}>
+                  <Button size="small" onClick={() => props.handleClickOpen(data)}>Edit</Button>
                   <Button size="small" className={classes.deleteButton} color="secondary"
                           onClick={() => props.deleteTransaction(data.ID)}>Delete</Button>
                 </CardActions>
@@ -54,6 +56,33 @@ const TransactionCard = props => {
         </Grid>
       </Grid>
 
+      <Dialog open={props.openEditDialog} onClose={() => props.handleClose()} fullWidth maxWidth="lg">
+        <DialogTitle>Edit Transaction</DialogTitle>
+        <DialogContent>
+          <TransactionForm
+            title={props.transactionToEdit.title}
+            amount={props.transactionToEdit.amount + ""}
+            type={(props.transactionToEdit.type) ? 1 : 0}
+            categoriesState={props.categoriesState}
+            date={props.transactionToEdit.date}
+
+            category={props.categoriesState.categories
+              .find(category => category.ID === props.transactionToEdit.categoryID)
+            || {ID: 0, title: "Uncategorized"}}
+
+            setTitle={props.handleTitleChange}
+            setType={props.handleTypeChange}
+            setAmount={props.handleAmountChange}
+            setCategory={props.handleCategoryChange}
+            setDate={props.handleDateChange}
+
+            handleSubmit={props.handleUpdate}
+            loading={props.loading}
+          />
+        </DialogContent>
+
+      </Dialog>
+
     </div>
   );
 };
@@ -64,6 +93,19 @@ TransactionCard.propTypes = {
   transactionsData: PropTypes.object,
 
   deleteTransaction: PropTypes.func,
+  openEditDialog: PropTypes.bool,
+  handleClose: PropTypes.func,
+  handleClickOpen: PropTypes.func,
+  transactionToEdit: PropTypes.object,
+
+  handleTitleChange: PropTypes.func,
+  handleTypeChange: PropTypes.func,
+  handleAmountChange: PropTypes.func,
+  handleCategoryChange: PropTypes.func,
+  handleDateChange: PropTypes.func,
+
+  handleUpdate: PropTypes.func,
+  loading: PropTypes.bool,
 }
 
 export default TransactionCard;

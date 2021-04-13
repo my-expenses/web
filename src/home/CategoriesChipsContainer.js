@@ -26,13 +26,10 @@ const CategoriesChipsContainer = () => {
 
   useEffect(() => {
     dispatch(startCategoriesFetch())
-    setTimeout(() => {
-      api.get("/auth/categories")
-        .then(res => {
-          dispatch(fetchedCategories(res.data.categories))
-        }).catch(err => console.log(err))
-    }, 1000)
-
+    api.get("/auth/categories")
+      .then(res => {
+        dispatch(fetchedCategories(res.data.categories))
+      }).catch(err => console.log(err))
   }, [])
 
   const createNewCategory = () => {

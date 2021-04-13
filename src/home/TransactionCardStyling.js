@@ -23,7 +23,10 @@ export default makeStyles(theme => ({
     marginTop: "auto"
   },
   card: {
-    height: "100%"
-  }
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between"
+  },
 
 }))

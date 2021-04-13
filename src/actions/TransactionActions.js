@@ -13,6 +13,13 @@ export const addedTransaction = transaction => {
   }
 }
 
+export const updatedTransaction = transaction => {
+  return {
+    type: "UPDATED_TRANSACTION",
+    updatedTransaction: transaction,
+  }
+}
+
 export const removedTransaction = transactionID => {
   return {
     type: "DELETE_TRANSACTION",

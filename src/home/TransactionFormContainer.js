@@ -16,6 +16,7 @@ const TransactionFormContainer = () => {
   const [category, setCategory] = useState(uncategorized)
   const [type, setType] = useState(0)  // 0 for expenses, 1 for income
   const [date, setDate] = useState(new Date())
+  const [loadingCreate, setLoadingCreate] = useState(false)
   const dispatch = useDispatch()
   const selectedMonth = useSelector(state => state.selectedMonth)
   const maxDate = useSelector(state => {
@@ -44,6 +45,7 @@ const TransactionFormContainer = () => {
   }, [categoriesState])
 
   const handleSubmit = () => {
+    setLoadingCreate(true)
     api.post("/auth/transactions", qs.stringify({
       transactionTitle: title,
       amount: amount,
@@ -57,6 +59,7 @@ const TransactionFormContainer = () => {
         clearForm()
       })
       .catch(err => dispatch(errorAction(err.response.data.message)))
+      .finally(() => setLoadingCreate(false))
   }
 
   const clearForm = () => {
@@ -84,6 +87,7 @@ const TransactionFormContainer = () => {
         maxDate={maxDate}
 
         handleSubmit={handleSubmit}
+        loading={loadingCreate}
       />
     </div>
   );

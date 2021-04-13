@@ -1,6 +1,6 @@
-import {MenuItem, TextField} from "@material-ui/core";
+import {LinearProgress, MenuItem, TextField} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import { MuiPickersUtilsProvider, DateTimePicker } from "@material-ui/pickers";
+import {MuiPickersUtilsProvider, DateTimePicker} from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import moment from "moment";
 import PropTypes from 'prop-types';
@@ -37,8 +37,8 @@ const TransactionForm = props => {
             options={[{ID: 0, title: "Uncategorized"}, ...props.categoriesState.categories]}
             disableClearable
             getOptionLabel={(option) => option.title}
-            getOptionSelected={(option, value) => option.ID === value.ID }
-            renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+            getOptionSelected={(option, value) => option.ID === value.ID}
+            renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined"/>}
             value={props.category}
             onChange={(event, newValue) => props.setCategory(newValue)}
           />
@@ -71,10 +71,14 @@ const TransactionForm = props => {
           </MuiPickersUtilsProvider>
         </Grid>
         <Grid container>
-          <Grid item xs={6}>
-            <Button variant="contained" color="primary" fullWidth onClick={() =>props.handleSubmit()}>
+          <Grid item>
+            {!props.loading && <Button variant="contained"
+                     color="primary" fullWidth onClick={() => props.handleSubmit()}>
               Save
-            </Button>
+            </Button>}
+          </Grid>
+          <Grid item xs={12}>
+            {props.loading && <LinearProgress />}
           </Grid>
         </Grid>
       </Grid>
