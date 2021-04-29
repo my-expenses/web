@@ -20,7 +20,7 @@ const TransactionsContainer = () => {
       params: {
         page: page,
         itemsPerPage: itemsPerPage,
-        sortBy: ["created_at"],
+        sortBy: ["date"],
         sortDesc: ["true"],
         month: new Date(selectedMonth).toISOString(),
       }

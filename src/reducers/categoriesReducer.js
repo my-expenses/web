@@ -23,7 +23,7 @@ const categoriesReducer = (state = initialState, action) => {
     case "DELETE_CATEGORY":
       return {
         ...state,
-        categories: state.filter(category => category.ID !== action.deletedCategoryID)
+        categories: state.categories.filter(category => category.ID !== action.deletedCategoryID)
       }
 
     case "UPDATE_CATEGORY":
