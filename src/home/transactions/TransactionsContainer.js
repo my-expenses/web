@@ -1,8 +1,8 @@
 import Transactions from "./Transactions";
 import {useEffect, useState} from "react";
-import api from "../gateways/api";
+import api from "../../gateways/api";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchedTransactions, startedFetchingTransactions} from "../actions/TransactionActions";
+import {fetchedTransactions, startedFetchingTransactions} from "../../actions/TransactionActions";
 
 const TransactionsContainer = () => {
   const [page, setPage] = useState(1)

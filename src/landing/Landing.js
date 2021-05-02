@@ -1,5 +1,5 @@
 import styles from "./styling";
-import cardStyles from "../home/TransactionCardStyling"
+import cardStyles from "../home/transactions_cards/TransactionCardStyling"
 import Grid from "@material-ui/core/Grid";
 import {
   Card, CardActions,

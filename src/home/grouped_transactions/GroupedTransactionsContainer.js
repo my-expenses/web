@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux";
 import GroupedTransactions from "./GroupedTransactions";
 import {useEffect, useState} from "react";
-import api from "../gateways/api";
+import api from "../../gateways/api";
 
 const GroupedTransactionsContainer = () => {
   const categoriesState = useSelector(state => state.categories)

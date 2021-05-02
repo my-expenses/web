@@ -1,12 +1,12 @@
-import TransactionCard from "./TransactionCard";
-import api from "../gateways/api";
+import TransactionsCards from "./TransactionsCards";
+import api from "../../gateways/api";
 import {useDispatch, useSelector} from "react-redux";
-import {errorAction, successAction} from "../actions/MessageActions";
-import {removedTransaction, updatedTransaction} from "../actions/TransactionActions";
+import {errorAction, successAction} from "../../actions/MessageActions";
+import {removedTransaction, updatedTransaction} from "../../actions/TransactionActions";
 import {useState} from "react";
 import qs from "qs";
 
-const TransactionCardContainer = (props) => {
+const TransactionsCardsContainer = (props) => {
   const dispatch = useDispatch()
   const categoriesState = useSelector(state => state.categories)
   const transactionsData = useSelector(state => state.transactionsData)
@@ -82,7 +82,7 @@ const TransactionCardContainer = (props) => {
 
   return (
     <div>
-      <TransactionCard
+      <TransactionsCards
         categoriesState={categoriesState}
         page={props.page}
         setPage={props.setPage}
@@ -107,4 +107,4 @@ const TransactionCardContainer = (props) => {
   );
 };
 
-export default TransactionCardContainer;
+export default TransactionsCardsContainer;
