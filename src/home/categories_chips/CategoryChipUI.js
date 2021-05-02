@@ -12,7 +12,7 @@ const CategoryChipUi = props => {
       onDelete={() => props.handleEditDialogOpen(props.category)}
       className={classes.chip}
       deleteIcon={
-        <IconButton disabled={props.showTextField}>
+        <IconButton disabled={props.showTextField || props.displayOnly}>
           <EditIcon/>
         </IconButton>
       }
@@ -25,6 +25,7 @@ CategoryChipUi.propTypes = {
   category: PropTypes.object,
   handleEditDialogOpen: PropTypes.func,
   showTextField: PropTypes.bool,
+  displayOnly: PropTypes.bool,
 };
 
 export default CategoryChipUi;

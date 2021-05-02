@@ -33,8 +33,9 @@ const TransactionCardUi = (props) => {
       />
 
       <CardActions disableSpacing>
-        <Button size="small" onClick={() => props.handleClickOpen(props.transaction)}>Edit</Button>
-        <Button size="small" className={classes.deleteButton} color="secondary"
+        <Button size="small" disabled={props.displayOnly}
+                onClick={() => props.handleClickOpen(props.transaction)}>Edit</Button>
+        <Button size="small" disabled={props.displayOnly} className={classes.deleteButton} color="secondary"
                 onClick={() => props.deleteTransaction(props.transaction.ID)}>Delete</Button>
       </CardActions>
     </Card>
@@ -46,7 +47,7 @@ TransactionCardUi.propTypes = {
   categoryTitle: PropTypes.string,
   handleClickOpen: PropTypes.func,
   deleteTransaction: PropTypes.func,
-
+  displayOnly: PropTypes.bool,
 }
 
 export default TransactionCardUi;

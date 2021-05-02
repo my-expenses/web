@@ -32,13 +32,13 @@ const TransactionsCards = props => {
 
 
         {!props.categoriesState.loading && props.transactionsData.transactions.map(data => {
+          let category = props.categoriesState.categories.find(category => category.ID === data.categoryID)
           return (
             <Grid item key={data.ID} xs={12} lg={6}>
               <TransactionCardUi
               transaction={data}
               categoryTitle={
-                (data.categoryID === null) ? "Uncategorized"
-                  : props.categoriesState.categories.find(category => category.ID === data.categoryID).title
+                (category === undefined) ? "Uncategorized" : category.title
               }
               deleteTransaction={props.deleteTransaction}
               handleClickOpen={props.handleClickOpen}

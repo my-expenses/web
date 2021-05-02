@@ -1,61 +1,54 @@
+import PropTypes from "prop-types"
 import styles from "./styling";
-import cardStyles from "../home/transactions_cards/TransactionCardStyling"
+import categoriesStyles from "../home/styling"
 import Grid from "@material-ui/core/Grid";
-import {
-  Card, CardActions,
-  CardHeader,
-  CssBaseline,
-  Paper,
-  Tooltip
-} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Avatar from "@material-ui/core/Avatar";
-import moment from "moment";
-import Chip from "@material-ui/core/Chip";
+import {CssBaseline, Paper} from "@material-ui/core";
+import TransactionCardUi from "../home/transactions_cards/TransactionCardUI";
+import CategoryChipUi from "../home/categories_chips/CategoryChipUI";
 
-const Landing = () => {
+const Landing = (props) => {
   const classes = styles();
-  const cardClasses = cardStyles();
+  const categoriesClasses = categoriesStyles()
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={12} sm={4} md={7} className={classes.image} >
-
-      </Grid>
+      <Grid item xs={12} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={0} square>
-        <Grid item xs={12}>
-          <Card className={cardClasses.card} elevation={6}>
-            <CardHeader
-              avatar={
-                <Tooltip title={500} arrow>
-                  <Avatar className={cardClasses.incomeAvatar}>
-                    500
-                  </Avatar>
-                </Tooltip>
-              }
 
-              title="First Transaction"
-              subheader={new moment(new Date()).format("llll")}
-              titleTypographyProps={{variant: "h6"}}
-              subheaderTypographyProps={{variant: "subtitle1"}}
-              action={
-                <Chip
-                  label="Category No. 1"
-                  color="primary"
-                  className={cardClasses.chipText}
+        <Paper component="ul" className={categoriesClasses.root}>
+        {props.categories.map((data) => {
+          return (
+            <li key={data.ID}>
+              <CategoryChipUi
+                category={data}
+                displayOnly={true}
+              />
+            </li>
+          );
+        })}
+        </Paper>
+
+        <Grid container spacing={2}>
+          {props.transactions.map(data => {
+            return(
+              <Grid item key={data.ID} xs={12}>
+                <TransactionCardUi
+                  transaction={data}
+                  categoryTitle={data.categoryTitle}
+                  displayOnly={true}
                 />
-              }
-            />
-
-            <CardActions disableSpacing className={cardClasses.cardActions}>
-              <Button size="small">Edit</Button>
-              <Button size="small" className={cardClasses.deleteButton} color="secondary">Delete</Button>
-            </CardActions>
-          </Card>
+              </Grid>
+            )
+          })}
         </Grid>
       </Grid>
     </Grid>
   );
 };
+
+Landing.propTypes = {
+  transactions: PropTypes.array,
+  categories: PropTypes.array,
+}
 
 export default Landing;
