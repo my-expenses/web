@@ -32,7 +32,6 @@ const CustomAppBar = () => {
   const history = useHistory()
 
   const handleLogoutButton = () => {
-    localStorage.setItem("token", "")
     dispatch(logout())
     history.push("/login")
   }

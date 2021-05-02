@@ -19,9 +19,11 @@ const LoginContainer = (props) => {
       password: password
     }))
       .then(res => {
-        let token = res.data.token
-        localStorage.setItem("token", token)
-        dispatch(login(token))
+        let accessToken = res.data.accessToken
+        let refreshToken = res.data.refreshToken
+        localStorage.setItem("accessToken", accessToken)
+        localStorage.setItem("refreshToken", refreshToken)
+        dispatch(login())
         history.push("/")
       })
       .catch(err => {
