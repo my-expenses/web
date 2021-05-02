@@ -202,9 +202,9 @@ const Register = (props) => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to="/login" variant="body2">
+              <Button variant="text" onClick={() => props.handleShowLogin()}>
                 Already have an account? Sign in
-              </Link>
+              </Button>
             </Grid>
           </Grid>
         </form>

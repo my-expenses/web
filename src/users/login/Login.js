@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import styles from "../styling";
+import React from "react";
 
 const Login = (props) => {
   const classes = styles();
@@ -77,9 +78,9 @@ const Login = (props) => {
           </Button>
           <Grid container>
             <Grid item>
-              <Link to="/register" variant="body2">
+              <Button variant="text" onClick={() => props.handleShowRegister()}>
                 Don't have an account? Sign Up
-              </Link>
+              </Button>
             </Grid>
           </Grid>
         </form>

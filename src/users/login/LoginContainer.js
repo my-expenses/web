@@ -17,12 +17,15 @@ const LoginContainer = (props) => {
     api.post("/users/login", qs.stringify({
       email: email,
       password: password
-    }))
+    }), {
+      skipAuthRefresh: true
+    })
       .then(res => {
         let accessToken = res.data.accessToken
         let refreshToken = res.data.refreshToken
         localStorage.setItem("accessToken", accessToken)
         localStorage.setItem("refreshToken", refreshToken)
+        props.handleDrawerClose()
         dispatch(login())
         history.push("/")
       })
@@ -39,6 +42,8 @@ const LoginContainer = (props) => {
         onEmailChange={(value) => setEmail(value)}
         onPasswordChange={(value) => setPassword(value)}
         onSubmit={() => submitForm()}
+        handleShowRegister={props.handleShowRegister}
+        handleDrawerClose={props.handleDrawerClose}
       />
     </div>
   );
