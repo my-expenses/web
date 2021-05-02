@@ -8,7 +8,6 @@ import api from "../../gateways/api";
 import qs from "qs";
 import {useDispatch} from "react-redux";
 import {errorAction, successAction} from "../../actions/MessageActions";
-import {useHistory} from "react-router-dom";
 
 const RegisterContainer = (props) => {
 
@@ -24,7 +23,6 @@ const RegisterContainer = (props) => {
   const [emailError, setEmailError] = useState('Please enter a valid email')
 
   const dispatch = useDispatch()
-  const history = useHistory();
 
   const [validLength, hasNumber, upperCase, lowerCase, match, specialChar,] =
     usePasswordValidation({

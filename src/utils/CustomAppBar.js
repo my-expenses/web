@@ -6,11 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../actions/UserActions";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {ReactComponent as Logo} from "../logo.svg"
 import {Drawer} from "@material-ui/core";
 import LoginContainer from "../users/login/LoginContainer";
-import Grid from "@material-ui/core/Grid";
 import RegisterContainer from "../users/register/RegisterContainer";
 
 const useStyles = makeStyles((theme) => ({
