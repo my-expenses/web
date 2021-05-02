@@ -71,8 +71,7 @@ const CategoriesChipsContainer = () => {
   }
 
   const updateCategory = () => {
-    api.put("/auth/categories", qs.stringify({
-      categoryID: categoryToEdit.ID,
+    api.put(`/auth/categories/${categoryToEdit.ID}`, qs.stringify({
       title: typedCategoryName
     })).then(res => {
       dispatch(successAction("Category updated"))
