@@ -1,10 +1,10 @@
 import TransactionForm from "./TransactionForm";
 import {useEffect, useState} from "react";
-import api from "../gateways/api";
+import api from "../../gateways/api";
 import qs from "qs";
 import {useDispatch, useSelector} from "react-redux";
-import {errorAction, successAction} from "../actions/MessageActions";
-import {addedTransaction} from "../actions/TransactionActions";
+import {errorAction, successAction} from "../../actions/MessageActions";
+import {addedTransaction} from "../../actions/TransactionActions";
 
 const TransactionFormContainer = () => {
   const uncategorized = {

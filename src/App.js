@@ -1,10 +1,10 @@
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import LoginContainer from "./users/login/LoginContainer";
 import RegisterContainer from "./users/register/RegisterContainer";
 import HomeContainer from "./home/HomeContainer";
 import CustomAppBar from "./utils/CustomAppBar";
 import ErrorMessage from "./utils/ErrorMessage";
 import PrivateRoute from "./utils/PrivateRoute";
+import LandingContainer from "./landing/LandingContainer";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <div className="content">
           <Switch>
             <Route exact path="/login">
-              <LoginContainer/>
+              <LandingContainer />
             </Route>
             <Route exact path="/register">
               <RegisterContainer />

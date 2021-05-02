@@ -1,16 +1,16 @@
 import {useEffect, useState} from "react";
-import api from "../gateways/api";
+import api from "../../gateways/api";
 import qs from "qs";
 import CategoriesChips from "./CategoriesChips";
 import {useDispatch, useSelector} from "react-redux";
-import {errorAction, successAction} from "../actions/MessageActions";
+import {errorAction, successAction} from "../../actions/MessageActions";
 import {
   addedCategory,
   fetchedCategories,
   removedCategory,
   startCategoriesFetch,
   updatedCategory
-} from "../actions/CategoryActions";
+} from "../../actions/CategoryActions";
 
 const CategoriesChipsContainer = () => {
   const [showTextField, setShowTextField] = useState(false);
@@ -71,8 +71,7 @@ const CategoriesChipsContainer = () => {
   }
 
   const updateCategory = () => {
-    api.put("/auth/categories", qs.stringify({
-      categoryID: categoryToEdit.ID,
+    api.put(`/auth/categories/${categoryToEdit.ID}`, qs.stringify({
       title: typedCategoryName
     })).then(res => {
       dispatch(successAction("Category updated"))

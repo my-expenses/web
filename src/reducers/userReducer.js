@@ -1,5 +1,4 @@
 const initialState = {
-  accessToken: "",
   loggedIn: false,
 }
 
@@ -7,13 +6,13 @@ const userReducer = (state = initialState, action) => {
   switch(action.type) {
     case "LOGGED_IN": {
       return {
-        accessToken: action.accessToken,
         loggedIn: true,
       }
     }
     case "LOGGED_OUT": {
+      localStorage.setItem("accessToken", "")
+      localStorage.setItem("refreshToken", "")
       return {
-        accessToken: "",
         loggedIn: false,
       }
     }

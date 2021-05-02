@@ -3,7 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import {Link} from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import LockIcon from '@material-ui/icons/Lock';
@@ -12,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import styles from "../styling";
+import React from "react";
 
 const Login = (props) => {
   const classes = styles();
@@ -77,9 +77,9 @@ const Login = (props) => {
           </Button>
           <Grid container>
             <Grid item>
-              <Link to="/register" variant="body2">
+              <Button variant="text" onClick={() => props.handleShowRegister()}>
                 Don't have an account? Sign Up
-              </Link>
+              </Button>
             </Grid>
           </Grid>
         </form>

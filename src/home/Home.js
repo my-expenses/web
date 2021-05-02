@@ -2,8 +2,8 @@ import {DatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import CategoriesChipsContainer from "./CategoriesChipsContainer";
-import TransactionsContainer from "./TransactionsContainer";
+import CategoriesChipsContainer from "./categories_chips/CategoriesChipsContainer";
+import TransactionsContainer from "./transactions/TransactionsContainer";
 
 const Home = (props) => {
   return (

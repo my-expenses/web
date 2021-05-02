@@ -1,17 +1,11 @@
 import PropTypes from 'prop-types';
-import {Card, CardActions, CardHeader, Dialog, DialogContent, DialogTitle, Tooltip} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import styles from "./TransactionCardStyling";
-import Chip from "@material-ui/core/Chip";
-import Avatar from "@material-ui/core/Avatar";
+import {Card, CardHeader, Dialog, DialogContent, DialogTitle} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import moment from 'moment';
 import {Pagination, Skeleton} from "@material-ui/lab";
-import TransactionForm from "./TransactionForm";
+import TransactionForm from "../transactionForm/TransactionForm";
+import TransactionCardUi from "./TransactionCardUI";
 
-const TransactionCard = props => {
-  const classes = styles()
-
+const TransactionsCards = props => {
   return (
     <div>
       <Grid container spacing={2}>
@@ -38,37 +32,17 @@ const TransactionCard = props => {
 
 
         {!props.categoriesState.loading && props.transactionsData.transactions.map(data => {
+          let category = props.categoriesState.categories.find(category => category.ID === data.categoryID)
           return (
             <Grid item key={data.ID} xs={12} lg={6}>
-              <Card className={classes.card}>
-                <CardHeader
-                  avatar={
-                    <Tooltip title={data.amount} arrow>
-                      <Avatar className={(data.type) ? classes.incomeAvatar : classes.expenseAvatar}>
-                        {data.amount}
-                      </Avatar>
-                    </Tooltip>
-                  }
-
-                  title={data.title}
-                  subheader={new moment(data.date).format("llll")}
-                  titleTypographyProps={{variant: "h6"}}
-                  subheaderTypographyProps={{variant: "subtitle1"}}
-                  action={
-                    <Chip
-                      label={(data.categoryID === null) ? "-" : props.categoriesState.categories.find(category => category.ID === data.categoryID).title}
-                      color="primary"
-                      className={classes.chipText}
-                    />
-                  }
-                />
-
-                <CardActions disableSpacing className={classes.cardActions}>
-                  <Button size="small" onClick={() => props.handleClickOpen(data)}>Edit</Button>
-                  <Button size="small" className={classes.deleteButton} color="secondary"
-                          onClick={() => props.deleteTransaction(data.ID)}>Delete</Button>
-                </CardActions>
-              </Card>
+              <TransactionCardUi
+              transaction={data}
+              categoryTitle={
+                (category === undefined) ? "Uncategorized" : category.title
+              }
+              deleteTransaction={props.deleteTransaction}
+              handleClickOpen={props.handleClickOpen}
+              />
             </Grid>
           )
         })}
@@ -109,7 +83,7 @@ const TransactionCard = props => {
   );
 };
 
-TransactionCard.propTypes = {
+TransactionsCards.propTypes = {
   page: PropTypes.number,
   setPage: PropTypes.func,
   transactionsData: PropTypes.object,
@@ -130,4 +104,4 @@ TransactionCard.propTypes = {
   loading: PropTypes.bool,
 }
 
-export default TransactionCard;
+export default TransactionsCards;

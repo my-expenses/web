@@ -14,10 +14,10 @@ import {
 import IconButton from "@material-ui/core/IconButton";
 import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
-import EditIcon from "@material-ui/icons/Edit";
-import styles from "./styling"
+import styles from "../styling"
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import CategoryChipUi from "./CategoryChipUI";
 
 const CategoriesChips = props => {
   const maxCategoryLength = 30;
@@ -29,16 +29,10 @@ const CategoriesChips = props => {
         {!props.categoriesState.loading && props.categoriesState.categories.map((data) => {
           return (
             <li key={data.ID}>
-              <Chip
-                label={data.title}
-                onDelete={() => props.handleEditDialogOpen(data)}
-                className={classes.chip}
-                deleteIcon={
-                  <IconButton disabled={props.showTextField}>
-                    <EditIcon/>
-                  </IconButton>
-                }
-                onDoubleClick={() => console.log("DOUBLE CLICK")}
+              <CategoryChipUi
+                category={data}
+                handleEditDialogOpen={props.handleEditDialogOpen}
+                showTextField={props.showTextField}
               />
             </li>
           );

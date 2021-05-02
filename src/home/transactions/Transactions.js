@@ -1,9 +1,9 @@
-import TransactionFormContainer from "./TransactionFormContainer";
-import TransactionCardContainer from "./TransactionCardContainer";
+import TransactionFormContainer from "../transactionForm/TransactionFormContainer";
+import TransactionsCardsContainer from "../transactions_cards/TransactionsCardsContainer";
 import Grid from "@material-ui/core/Grid";
 import {Tab} from "@material-ui/core";
 import {TabContext, TabList, TabPanel} from "@material-ui/lab";
-import GroupedTransactionsContainer from "./GroupedTransactionsContainer";
+import GroupedTransactionsContainer from "../grouped_transactions/GroupedTransactionsContainer";
 
 const Transactions = props => {
   return (
@@ -20,7 +20,7 @@ const Transactions = props => {
               <TransactionFormContainer />
             </Grid>
             <Grid item xs={12}>
-              <TransactionCardContainer
+              <TransactionsCardsContainer
                 page={props.page}
                 setPage={props.setPage}
               />
